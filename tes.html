@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <button type="button" @click="@tambahbarang">tambah</button>
+        <input type="text" v-model="barang[0].nama">
+        <input type="number" v-model="barang[0].harga">
+        <ul>
+            <li v-for="item in barang">
+                {{ item.nama }}
+            </li>
+        </ul>
+        {{ barang }}
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data(){
+                return {
+                    barang: [{nama: 'Mitsubishi', harga: 35000}]
+                }
+            }
+            ,
+            methods : {
+                tambahBarang(){
+                    barang
+                },
+            }
+        })
+    </script>
+</body>
+</html>
