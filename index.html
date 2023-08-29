@@ -4,7 +4,6 @@
 <head>
     <meta charset="utf-8">
     <title>Kwitansi</title>
-    <link rel="stylesheet" href="../assets/css/sb-admin-2.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="kwitansi.css">
     <!-- <link rel="stylesheet" href="assets/css/bootstrap-reboot.min.css"> -->
@@ -12,30 +11,31 @@
 </head>
 
 <body>
-    <div class="margin">
-        <div class="kop row">
-            <div class="col-12 text-center">
-                <div class="h1">JAGAT PERSADA</div>
-                <span>Cikarang Barat, Kabupaten Bekasi, Jawa Barat</span>
-            </div>
-        </div>
-        <div class="main">
-            <div class="detail">
-                <div class="detail-title mt-2">
-                    <h4><u><b>Kwitansi</b></u></h4>
+    <div id="app">
+        <div class="margin">
+            <div class="kop row">
+                <div class="col-12 text-center">
+                    <div class="h1">JAGAT PERSADA</div>
+                    <span>Cikarang Barat, Kabupaten Bekasi, Jawa Barat</span>
                 </div>
+            </div>
+            <div class="main">
+                <div class="detail">
+                    <div class="detail-title mt-2">
+                        <h4><u><b>Kwitansi</b></u></h4>
+                    </div>
                     <div class="row mt-5 m-2">
                         <div class="col-6">
                             <table>
                                 <tr>
                                     <td>Telah diterima dari</td>
                                     <td>:</td>
-                                    <td>Bapak Ibnu</td>
+                                    <td v-text="pembeli"></td>
                                 </tr>
                                 <tr>
                                     <td>Sejumlah Uang</td>
                                     <td>:</td>
-                                    <td>Rp. 50.000 </td>
+                                    <td>Rp. {{ nomorPemisah(total) }}</td>
                                 </tr>
                                 <tr>
                                     <td>Terbilang:</td>
@@ -44,126 +44,62 @@
                                 </tr>
                             </table>
                             <div class="terbilang">
-                                Delapan Belas juta Dua Ratus Sembilan Puluh Tiga Ribu Rupiah
+                                {{ terbilang }} Rupiah
                             </div>
                         </div>
                         <div class="col-6">
                             <table class="float-right">
-                                <tr>
-                                    <td>Tanggal</td>
-                                    <td>:</td>
-                                    <td><span>19 Desember 2023</span></td>
-                                </tr>
                                 <tr>
                                     <td>No Kwitansi</td>
                                     <td>:</td>
                                     <td><span>2001021021</span></td>
                                 </tr>
                                 <tr>
-                                    <td>Pelanggan</td>
+                                    <td>Tanggal</td>
                                     <td>:</td>
-                                    <td><span>PT Global Jaya Mandiri Berkah</span></td>
+                                    <td><span>19 Desember 2023</span></td>
                                 </tr>
                             </table>
                         </div>
                     </div>
-
                     <table cellspacing="0" class="detail-table">
                         <thead>
                             <tr class="text-uppercase text-bold">
                                 <td class="border-left-0">No.</td>
                                 <td>Keterangan</td>
+                                <td>Qty</td>
                                 <td>Harga</td>
                                 <td class="border-right-0">Total Harga</td>
                             </tr>
                         </thead>
                         <!-- perulangan produk -->
 
-                            <tr>
-                                <td class="border-left-0">1</td>
-                                <td>Mitsubishi FR-A700 3.7 kW</td>
+                            <tr v-for="(item,index) in barang">
+                                <td class="border-left-0">{{ index+1 }}</td>
+                                <td>{{ item.nama }}</td>
+                                <td>{{ item.qty }}</td>
                                 <td>
                                     <span class="float-left ml-3">Rp.</span>
-                                    <span class="float-right mr-2">2.400.000</span>
+                                    <span class="float-right mr-2">{{ nomorPemisah(item.harga) }}</span>
+                                    
                                 </td>
                                 <td class="border-right-0">
                                     <span class="float-left ml-3">Rp.</span>
-                                    <span class="float-right mr-2">2.400.000</span>
+                                    <span class="float-right mr-2">{{ nomorPemisah(item.harga*item.qty) }}</span>
                                 </td>
                             </tr>
 
                         <!-- keterangan total -->
                         <tr>
-                            <td colspan="2" rowspan="3" class="border-left-0"></td>
+                            <td colspan="3" rowspan="3" class="border-left-0"></td>
                             <td class="text-center">Total</td>
                             <td class="border-right-0">
                                 <span class="float-left ml-3">Rp.</span>
-                                <span class="float-right mr-2">2.400.000</span>
-                            </td>
-                        </tr>
-
-                            <tr>
-                                <!-- <td colspan="2" class="border-0"></td> -->
-                                <td class="text-center">Diskon</td>
-                                <td class="border-right-0">
-                                    <span class="float-left ml-3">Rp.</span>
-                                    <span class="float-right mr-2">200.000</span>
-                                </td>
-                            </tr>
-
-                            <!-- <tr>
-                                <td colspan="2" class="border-0"></td>
-                                <td class="float-left ml-5">PPN %</td>
-                                <td class="border-right-0">
-                                    <span class="float-left ml-3">Rp.</span>
-                                    <span class="float-right mr-2"></span>
-                                </td>
-                            </tr> -->
-                        <tr>
-                            <!-- <td colspan="2" class="border-bottom-5"></td> -->
-                            <td class="text-center"><b>SUBTOTAL</b></td>
-                            <td class="border-right-0">
-                                <b>
-                                    <span class="float-left ml-3">Rp.</span>
-                                    <span class="float-right mr-2">2.200.000</span>
-                                </b>
+                                <span class="float-right mr-2">{{ nomorPemisah(total) }}</span>
                             </td>
                         </tr>
                     </table>
-                    <!-- <div class="notes">
-                        <span class="ml-2 mt-2"><i>Note</i></span> :
-                        <ol>
-                            <li>Harga</li>
-                            <li>Harga Sudah Termasuk Ongkos Kirim dan Biaya Instalasi</li>
-                            <li>Pembayaran Via Transfer Bank </li>
-                        </ol>
-                    </div> -->
                     <div class="row mt-5">
-                        <!-- <div class="col-6" style="border-right:2px solid black;">
-                            <span class="text-uppercase ml-2">
-                                <b><u>keterangan</u></b>
-                            </span>
-                            <div class="container mt-4 ml-n2">
-                                <span>Pembayaran untuk invoice ini mohon di transfer ke Rekening</span>
-                                <table cellpadding="4">
-                                    <tr>
-                                        <td>A.n</td>
-                                        <td>:</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>No. Rekening</td>
-                                        <td>:</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Bank</td>
-                                        <td>:</td>
-                                        <td></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div> -->
                         <div class="col-8"></div>
                         <div class="col-4 text-center mb-5">
                             <span class="h4">
@@ -176,6 +112,18 @@
                 </div>
             </div>
         </div>
+
+        <div class="container mt-2 form">
+            <div class="form-group">
+                <label for="Pembeli">Pembeli</label>
+                <input class="form-control" type="text" v-model="pembeli" id="Pembeli">
+            </div>
+            <div class="row align-content-start">
+                <div class="col-3">
+                    <button class="btn btn-success" @click="printLabel()" v-if="ok">Print</button>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -184,15 +132,107 @@
     <script>
         const vm = new Vue({
             el: '#app',
-            data(){
-                return {
+            data: {
                     pembeli: '',
                     tanggal: null,
-                    
-                    uang: null,
                     atasNama: 'Jagat Persada',
-                    barang: []
-                }
+                    barang: [
+                    {
+                        nama: 'Mitsubishi FR-E 700',
+                        qty: 3,
+                        harga: 2400000
+                    },
+                    {
+                        nama: 'PLC Omron FY312',
+                        qty: 2,
+                        harga: 2800000
+                    }],
+                    ok: true
+                    
+            },
+            methods: {
+                generateTanggal(){
+                    let date = new Date()
+                    let tanggal = date.getDate()
+                    let bulan = date.getMonth()
+                    let tahun = date.getFullYear()
+                    return `${tahun}-${bulan}-${tanggal}`
+                },
+
+                nomorPemisah(x) {
+                    return String(x).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
+                },
+
+                tanggal_indo(date, ...as){
+                    let month = ["Januari",'Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember']
+                    let day = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis',"Jum'at", "Sabtu"]
+                    let hari = date.getDay()
+                    let tanggal = date.getDate()
+                    let bulan = date.getMonth()
+                    let tahun = date.getFullYear()
+
+                    if(as) return `${day[hari]}, ${tanggal} ${month[bulan]} ${tahun}`
+                    else return `${tanggal} ${month[bulan]} ${tahun}`
+                },
+                pembilang: function(nilai) {
+                    nilai = Math.floor(Math.abs(nilai));
+                    
+                    let simpanNilaiBagi = 0;
+                    let huruf = [ '', 'Satu','Dua','Tiga','Empat','Lima','Enam','Tujuh','Delapan','Sembilan','Sepuluh','Sebelas']
+                    let temp = '';
+                    
+                    if (nilai < 12) {
+                        temp = ' ' + huruf[nilai];
+                    } else if (nilai < 20) {
+                        temp = this.pembilang(Math.floor(nilai - 10)) + ' Belas';
+                    } else if (nilai < 100) {
+                        simpanNilaiBagi = Math.floor(nilai / 10);
+                        temp = this.pembilang(simpanNilaiBagi) + ' Puluh' + this.pembilang(nilai % 10);
+                    } else if (nilai < 200) {
+                        temp = ' Seratus' + this.pembilang(nilai - 100);
+                    } else if (nilai < 1000) {
+                        simpanNilaiBagi = Math.floor(nilai / 100);
+                        temp = this.pembilang(simpanNilaiBagi) + ' Ratus' + this.pembilang(nilai % 100);
+                    } else if (nilai < 2000) {
+                        temp = ' Seribu' + this.pembilang(nilai - 1000);
+                    } else if (nilai < 1000000) {
+                        simpanNilaiBagi = Math.floor(nilai / 1000);
+                        temp = this.pembilang(simpanNilaiBagi) + ' Ribu' + this.pembilang(nilai % 1000);
+                    } else if (nilai < 1000000000) {
+                        simpanNilaiBagi = Math.floor(nilai / 1000000);
+                        temp = this.pembilang(simpanNilaiBagi) + ' Juta' + this.pembilang(nilai % 1000000);
+                    } else if (nilai < 1000000000000) {
+                        simpanNilaiBagi = Math.floor(nilai / 1000000000);
+                        temp =
+                        this.pembilang(simpanNilaiBagi) + ' Miliar' + this.pembilang(nilai % 1000000000);
+                    } else if (nilai < 1000000000000000) {
+                        simpanNilaiBagi = Math.floor(nilai / 1000000000000);
+                        temp = this.pembilang(nilai / 1000000000000) + ' Triliun' + this.pembilang(nilai % 1000000000000);
+                    }
+                    
+                    return temp
+                    },
+
+                    okchange(){
+                        this.ok = !this.ok
+                    },
+
+                    printLabel(){
+                        this.okchange()
+                        setTimeout(()=> window.print(),200)
+                        window.addEventListener('afterprint',()=>this.ok=true)
+                        }
+                
+            },
+            computed: {    
+                    total() {
+                        let total = this.barang.map( el => {return el.harga * el.qty})
+                        return total.reduce((total, num)=> {return total + num})
+                    },
+                    terbilang(){
+                        return this.pembilang(this.total)
+                    }
+
             }
 
         })
