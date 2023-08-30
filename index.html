@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>Kwitansi</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="kwitansi.css">
     <!-- <link rel="stylesheet" href="assets/css/bootstrap-reboot.min.css"> -->
 
@@ -114,13 +115,48 @@
         </div>
 
         <div class="container mt-2 form">
-            <div class="form-group">
-                <label for="Pembeli">Pembeli</label>
-                <input class="form-control" type="text" v-model="pembeli" id="Pembeli">
-            </div>
-            <div class="row align-content-start">
-                <div class="col-3">
-                    <button class="btn btn-success" @click="printLabel()" v-if="ok">Print</button>
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Form</h5>
+                    <button class="btn btn-primary btn-sm float-right" @click="addBarang()">tambah barang</button>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="Pembeli">Pembeli</label>
+                        <input class="form-control" type="text" v-model="pembeli" id="Pembeli">
+                    </div>
+                    <div class="form-row mb-2" v-for="(el, i) in barang">
+                        <div class="col-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Nama</span>
+                                </div>
+                                <input class="form-control" type="text" v-model="barang[i].nama" placeholder="nama barang" value="el.nama">
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Qty</span>
+                                </div>
+                                <input class="form-control" type="text" v-model="barang[i].qty" placeholder="Qty" value="el.qty">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Harga</span>
+                                </div>
+                                <input class="form-control" type="number" v-model="barang[i].harga" placeholder="harga" value="el.harga">
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <button class="btn btn-danger btn-sm" @click="removeBarang(i)">hapus</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                        <button class="btn btn-success" @click="printLabel()" v-if="ok">Print</button>
                 </div>
             </div>
         </div>
@@ -157,6 +193,14 @@
                     let bulan = date.getMonth()
                     let tahun = date.getFullYear()
                     return `${tahun}-${bulan}-${tanggal}`
+                },
+
+                addBarang(){
+                    this.barang.push({nama:'', harga: null})
+                },
+
+                removeBarang(index){
+                    this.barang.splice(index,1)
                 },
 
                 nomorPemisah(x) {
