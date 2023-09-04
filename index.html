@@ -178,7 +178,7 @@
             el: '#app',
             data: {
                     pembeli: '',
-                    tanggal: '2023-04-22',
+                    tanggal: '',
                     atasNama: 'Jagat Persada',
                     barang: [{nama:'', harga: null, qty: null}],
                     ok: true
@@ -186,14 +186,8 @@
             },
             methods: {
                 generateTanggal(){
-                    let date = new Date()
-                    let today = new Date();
-                    let dd = String(today.getDate()).padStart(2, '0');
-                    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-                    let yyyy = today.getFullYear();
-                    return `${yyyy}-${mm}-${dd}`
-                    this.tanggal = `${yyyy}-${mm}-${dd}`
-                    console.log(`${yyyy}-${mm}-${dd}`)
+                    let currentDate = new Date().toJSON().slice(0, 10)
+                    this.tanggal = currentDate
                 },
 
                 generateNoKwitansi(){
@@ -286,6 +280,9 @@
                         return this.pembilang(this.total)
                     }
 
+            },
+            mounted(){
+                this.generateTanggal()
             }
 
         })
