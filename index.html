@@ -58,7 +58,7 @@
                                 <tr>
                                     <td>Tanggal</td>
                                     <td>:</td>
-                                    <td><span>{{ tanggalIndo(tanggal, false) }}</span></td>
+                                    <td><span>{{ tanggalIndo(tanggal, true) }}</span></td>
                                 </tr>
                             </table>
                         </div>
@@ -92,7 +92,7 @@
 
                         <!-- keterangan total -->
                         <tr>
-                            <td colspan="3" rowspan="3" class="border-left-0"></td>
+                            <td colspan="3" class="border-left-0"></td>
                             <td class="text-center">Total</td>
                             <td class="border-right-0">
                                 <span class="float-left ml-3">Rp.</span>
@@ -100,6 +100,12 @@
                             </td>
                         </tr>
                     </table>
+                    <div class="row ml-auto">
+                        <div class="col-7">
+                            Catatan: <br>
+                            garansi unit selama 3 bulan terhitung sejak dari hari pembayaran
+                        </div>
+                    </div>
                     <div class="row mt-5">
                         <div class="col-8"></div>
                         <div class="col-4 text-center mb-5">
@@ -193,7 +199,7 @@
                 generateNoKwitansi(){
                     let string = this.tanggal.split('-')
                     string = string.join('').substr(2,6)
-                    let random = Math.floor(Math.random() * 100)
+                    let random = Math.floor(Math.random() * 10000)
                     return `JP${string}${String(random)}` 
                 },
 
